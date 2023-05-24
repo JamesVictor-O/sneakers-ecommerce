@@ -3,7 +3,7 @@ let numberofCart=document.querySelector(".noti");
 const cart=document.querySelector(".cart")
 cartItem=document.querySelector(".cart-items");
 
-let cartNum=0;
+let numberOfItemOnChart=0;
 let addCart;
 let parent;
 
@@ -95,8 +95,8 @@ DisplayCart()
 function AddCart(){
     addCart.forEach(addCart =>{
         addCart.addEventListener("click", (e)=>{
-            cartNum += 1
-            numberofCart.innerHTML=cartNum;
+            numberOfItemOnChart += 1
+            numberofCart.innerHTML=numberOfItemOnChart;
            let Target=e.target;
            parent=Target.parentElement;
            cartItem.innerHTML=parent;
@@ -105,3 +105,11 @@ function AddCart(){
        })
 }
 AddCart()
+// let sneakersData = function(){
+//     fetch("https://newsapi.org/v2/everything?q=tesla&from=2023-04-24&sortBy=publishedAt&apiKey=623632dd405a4b0e984728cc40574cb7").then(function (respons) {
+//         return respons.json();
+//     }).then(function (data) {
+//         console.log(data)
+//     });
+// }
+// sneakersData()
