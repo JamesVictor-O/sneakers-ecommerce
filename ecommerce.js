@@ -1,7 +1,7 @@
 const mainProduct=document.querySelector(".products")
 let numberofCart=document.querySelector(".noti");
 const cart=document.querySelector(".cart")
-cartItem=document.querySelector(".cart-items");
+let cartItem=document.querySelector(".cart-items");
 
 let numberOfItemOnChart=0;
 let addCart;
@@ -66,7 +66,8 @@ function Products(){
           product +=`<div class="pro-items">
           <img src=${products[i].picture}>
           <div class="about">
-              <p>${products[i].name}  <span>${products[i].price}</span></p>
+              <p>${products[i].name}</p>
+              <span>${products[i].price}</span>
           </div>
           <button class="addCart">Add to cart</button>
           </div>`
@@ -92,19 +93,64 @@ DisplayCart()
 
 // adding functionality to the addCart button on the item
 
-function AddCart(){
+function AddItemToCart(){{}
     addCart.forEach(addCart =>{
         addCart.addEventListener("click", (e)=>{
             numberOfItemOnChart += 1
             numberofCart.innerHTML=numberOfItemOnChart;
            let Target=e.target;
-           parent=Target.parentElement;
-           cartItem.innerHTML=parent;
-           console.log(parent)
+            parent = Target.parentElement;
+            console.log(parent)
+            let itemName = parent.querySelector("p").innerHTML;
+            itemPrice=parent.querySelector("span").innerHTML
+            itemImage=parent.querySelector("img").src
+          
+                
+            let itemdetails = `<div class="itemsOnCart">
+                <div>
+                <img src="${itemImage}" >
+                <h2>${itemName}</h2> 
+                </div>
+                <div>
+                    <input type="number" value=1 class="quantity" min="1">
+                </div>
+                <div class="price">
+                    <h2 class="priceValue">${itemPrice}</h2>
+                    <div class="totalPrice">
+                        <h2 class=""totalValue></h2>
+                    </div>
+                </div>
+            </div>
+            `
+            cartItem.innerHTML += itemdetails;
+
+            // let itemQuantity = document.querySelectorAll(".quantity")
+            // function ItemTotalPrice() {
+            //     for (let i = 0; i < itemQuantity.length; i++){
+            //         console.log(itemQuantity[i])
+            //     }
+            // }
+            // ItemTotalPrice()
+            let itemQuantity = document.querySelectorAll(".itemsOnCart")
+            function ItemTotalPrice() {
+                for (let i = 0; i < itemQuantity.length; i++){
+                    let amount = itemQuantity[i].querySelectorAll(".quantity")
+                    for (let i = 0; i < amount.length; i++) {
+                        amount[i].addEventListener("onChange", () => {
+                            alert("re")
+                        })
+                    }
+                    console.log(amount)
+                }
+            }
+            ItemTotalPrice()
+            console.log(itemQuantity)
+
+
         })
        })
 }
-AddCart()
+AddItemToCart()
 // let sneakersData = function(){
 //     fetch("https://newsapi.org/v2/everything?q=tesla&from=2023-04-24&sortBy=publishedAt&apiKey=623632dd405a4b0e984728cc40574cb7").then(function (respons) {
 //         return respons.json();

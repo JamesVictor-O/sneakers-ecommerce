@@ -303,9 +303,16 @@ body{
 }
 /* cart items */
 .cart-items{
-    display: block;
-    position: absolute;
-    background-color: blue;
-    left: 75%;
-    top: 8%;
+    background-color: rgb(93, 93, 230);
+    width: 100%;
+    height: 90vh;
+}
+/* items on cart */
+.itemsOnCart img{
+    width: 50px;
+}
+.itemsOnCart{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
