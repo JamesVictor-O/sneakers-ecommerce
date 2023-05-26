@@ -1,7 +1,11 @@
 const mainProduct=document.querySelector(".products")
-let numberofCart=document.querySelector(".noti");
+let numberofCart = document.querySelector(".noti");
+const homepage = document.querySelector(".homePage")
+const collection=document.querySelector(".collection")
 const cart=document.querySelector(".cart")
-let cartItem=document.querySelector(".cart-items");
+let cartItem = document.querySelector(".cart-items");
+const itemContainer = document.querySelector(".cartitem")
+const numberOfitem=document.querySelector(".no")
 
 let numberOfItemOnChart=0;
 let addCart;
@@ -11,20 +15,20 @@ const products=[
     {
         name:"nike shoe",
         picture:"assets/add1.jpeg",
-        price:"200"
+        price:"$200"
     },
     {
-        name:"nike shoe",
+        name:"nike airforce 3",
         picture:"assets/add2.png",
         price:"$200"
     },
     {
-        name:"nike shoe",
+        name:"nike airforce 3",
         picture:"assets/add4.jpg",
         price:"$200"
     },
     {
-        name:"nike shoe",
+        name:"nike airforec 2",
         picture:"assets/Add7.jpg",
         price:"$200"
     },
@@ -83,9 +87,14 @@ Products()
 function DisplayCart(){
     cart.addEventListener("click",()=>{
         if(cartItem.style.display === "none"){
-            cartItem.style.display="block"
+            cartItem.style.display = "block",
+                homepage.style.display = "none";
+            collection.style.display="none"
+            
         }else{
-            cartItem.style.display="none"
+            cartItem.style.display = "none"
+            homepage.style.display = "flex";
+            collection.style.display="grid"
         }
     })
 }
@@ -97,7 +106,8 @@ function AddItemToCart(){{}
     addCart.forEach(addCart =>{
         addCart.addEventListener("click", (e)=>{
             numberOfItemOnChart += 1
-            numberofCart.innerHTML=numberOfItemOnChart;
+            numberofCart.innerHTML = numberOfItemOnChart;
+            numberOfitem.innerHTML=numberOfItemOnChart
            let Target=e.target;
             parent = Target.parentElement;
             console.log(parent)
@@ -107,7 +117,7 @@ function AddItemToCart(){{}
           
                 
             let itemdetails = `<div class="itemsOnCart">
-                <div>
+                <div class="product">
                 <img src="${itemImage}" >
                 <h2>${itemName}</h2> 
                 </div>
@@ -116,37 +126,54 @@ function AddItemToCart(){{}
                 </div>
                 <div class="price">
                     <h2 class="priceValue">${itemPrice}</h2>
-                    <div class="totalPrice">
-                        <h2 class=""totalValue></h2>
+                    <div class="itemPrice">
+                        <h2 class="totalPrice">${itemPrice}</h2>
                     </div>
+                </div>
+                <div class="btn2">
+                <button>remove</button>
                 </div>
             </div>
             `
-            cartItem.innerHTML += itemdetails;
+            itemContainer.innerHTML += itemdetails;
 
-            // let itemQuantity = document.querySelectorAll(".quantity")
-            // function ItemTotalPrice() {
-            //     for (let i = 0; i < itemQuantity.length; i++){
-            //         console.log(itemQuantity[i])
-            //     }
-            // }
-            // ItemTotalPrice()
+            
             let itemQuantity = document.querySelectorAll(".itemsOnCart")
             function ItemTotalPrice() {
                 for (let i = 0; i < itemQuantity.length; i++){
                     let amount = itemQuantity[i].querySelectorAll(".quantity")
                     for (let i = 0; i < amount.length; i++) {
-                        amount[i].addEventListener("onChange", () => {
-                            alert("re")
+                        amount[i].addEventListener("change", (e) => {
+                            let parent = e.target.parentNode.parentNode;
+                            let quantity = e.target.value;
+                            let initial = parent.querySelector(".priceValue").innerHTML;
+                            let initialPrice = parseInt(initial.replace("$", ""));
+                            let totalValue = quantity * initialPrice;
+                            let totalPrice=parent.querySelector(".totalPrice").innerHTML=`$${totalValue}`
                         })
                     }
-                    console.log(amount)
+                      console.log(amount)  
+
                 }
             }
             ItemTotalPrice()
-            console.log(itemQuantity)
 
-
+            function RemoveProduct() {
+                for (let i = 0; i < itemQuantity.length; i++){
+                    let removeBotton = itemQuantity[i].querySelectorAll(".btn2");
+                    for (let i = 0; i < removeBotton.length; i++){
+                        removeBotton[i].addEventListener("click", (e) => {
+                            numberOfItemOnChart -= 1
+                            numberofCart.innerHTML = numberOfItemOnChart;
+                            numberOfitem.innerHTML=numberOfItemOnChart
+                            let parent = e.target.parentElement.parentElement;
+                            parent.remove()
+                            console.log(numberOfItemOnChart)
+                        })
+                    }
+                }
+            }
+            RemoveProduct()
         })
        })
 }
