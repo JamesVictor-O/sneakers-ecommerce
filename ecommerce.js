@@ -5,7 +5,10 @@ const collection=document.querySelector(".collection")
 const cart=document.querySelector(".cart")
 let cartItem = document.querySelector(".cart-items");
 const itemContainer = document.querySelector(".cartitem")
-const numberOfitem=document.querySelector(".no")
+const numberOfitem = document.querySelector(".no")
+const navBarCollection = document.querySelector(".btnCollection");
+const nike = document.querySelector(".nike")
+const adidas=document.querySelector(".adidas")
 
 let numberOfItemOnChart=0;
 let addCart;
@@ -18,22 +21,22 @@ const products=[
         price:"$200"
     },
     {
-        name:"nike airforce 3",
+        name:"adidas 3",
         picture:"assets/add2.png",
         price:"$200"
     },
     {
-        name:"nike airforce 3",
+        name:"adidas 3",
         picture:"assets/add4.jpg",
         price:"$200"
     },
     {
-        name:"nike airforec 2",
+        name:"adidas airforec 2",
         picture:"assets/Add7.jpg",
         price:"$200"
     },
     {
-        name:"nike shoe",
+        name:"adidas sheo",
         picture:"assets/shoe1.png",
         price:"$200"
     },
@@ -77,12 +80,42 @@ function Products(){
           </div>`
          mainProduct.innerHTML=product
         addCart=document.querySelectorAll(".addCart")
-       
-    }
-
+      }
 }
 Products()
+// display products base on brand
+function DisplayBrandItems(brand) {
+    let filteredItem = products.filter(items => {
+        return items.name.includes(brand)
+    })
+    product=""
+    for(let i=0;i<filteredItem.length; i++){
+        product +=`<div class="pro-items">
+        <img src=${filteredItem[i].picture}>
+        <div class="about">
+            <p>${filteredItem[i].name}</p>
+            <span>${filteredItem[i].price}</span>
+        </div>
+        <button class="addCart">Add to cart</button>
+        </div>`  
+        
+        mainProduct.innerHTML = product;
+        addCart = document.querySelectorAll(".addCart")
+        console.log(addCart)
+    
+    }  
+}
 
+adidas.addEventListener("click", () => { 
+        
+        DisplayBrandItems("adidas")
+})
+    
+nike.addEventListener("click", () => { 
+        
+    DisplayBrandItems("nike")
+})
+    
 // display cart item when you click on the cart button
 function DisplayCart(){
     cart.addEventListener("click",()=>{
@@ -98,8 +131,25 @@ function DisplayCart(){
         }
     })
 }
-DisplayCart()
+DisplayCart()    
+    
 
+function DisplayProducts(navbar,cart,home,collect) {
+    navbar.addEventListener("click", () => {
+        if (collect.style.display === "none") {
+            cart.style.display = "none",
+                home.style.display = "none";
+            collect.style.display = "grid"
+            
+        } else {
+            cart.style.display = "none",
+                home.style.display = "flex";
+            collect.style.display = "none"
+        }
+        
+    })
+}
+DisplayProducts(navBarCollection,cartItem,homepage,collection)
 // adding functionality to the addCart button on the item
 
 function AddItemToCart(){{}

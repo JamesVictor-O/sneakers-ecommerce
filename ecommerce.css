@@ -75,13 +75,15 @@ body{
     /* border-radius: 50%; */
 }
 .noti{
-    background-color: red;
-    padding: 5px;
+    background-color: white;
+    padding-right: 10px;
+    padding: 6px;
+    border: 0.7px solid black;
     text-align: center;
     border-radius: 50%;
     align-items: center;
     position: absolute;
-    width: 4px;
+    width: 12px;
     top: 2%;
     left: 91%;
 }
@@ -261,7 +263,7 @@ body{
     width: 110px;
 }
 .collection{
-    display: grid;
+    display: none;
 }
 .products{
     display: grid;
