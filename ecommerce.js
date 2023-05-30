@@ -226,6 +226,8 @@ function AddItemToCart(placeholder){
                     let amount = itemQuantity[i].querySelectorAll(".quantity")
                     for (let i = 0; i < amount.length; i++) {
                         amount[i].addEventListener("change", (e) => {
+                            let totalPriceOfItems = 0;
+
                             let parent = e.target.parentNode.parentNode;
                             let quantity = e.target.value;
                             let initial = parent.querySelector(".priceValue").innerHTML;
@@ -233,7 +235,15 @@ function AddItemToCart(placeholder){
                             let totalValue = quantity * initialPrice;
                             let subtotal = toTal += initialPrice;
                             let totalPrice = parent.querySelector(".totalPrice").innerHTML = `$${totalValue}`
-                            subTotalPrice.innerHTML = `$${subtotal}`
+                           
+                        //   suming up all the totalPrice
+                            let allCartItems = document.querySelectorAll(".totalPrice");
+                            for (let i = 0; i < allCartItems.length; i++){
+                                let Value = allCartItems[i].innerHTML;
+                                let Value2 = parseInt(Value.replace("$", ""))
+                                totalPriceOfItems += Value2;
+                            }
+                            subTotalPrice.innerHTML = `$${totalPriceOfItems}`;
                         })
                     }
 
