@@ -8,7 +8,9 @@ const itemContainer = document.querySelector(".cartitem")
 const numberOfitem = document.querySelector(".no")
 const navBarCollection = document.querySelector(".btnCollection");
 const nike = document.querySelector(".nike")
-const adidas=document.querySelector(".adidas")
+const adidas = document.querySelector(".adidas")
+const payMent = document.querySelector(".payment")
+const subTotalPrice=document.querySelector("#sub")
 
 let numberOfItemOnChart=0;
 let addCart;
@@ -75,16 +77,17 @@ function Products(){
           <div class="about">
               <p>${products[i].name}</p>
               <span>${products[i].price}</span>
-          </div>
+           </div>
           <button class="addCart">Add to cart</button>
           </div>`
          mainProduct.innerHTML=product
-        addCart=document.querySelectorAll(".addCart")
+        let addCart = document.querySelectorAll(".addCart")
+        AddItemToCart(addCart)
       }
 }
-Products()
 // display products base on brand
 function DisplayBrandItems(brand) {
+    
     let filteredItem = products.filter(items => {
         return items.name.includes(brand)
     })
@@ -100,14 +103,14 @@ function DisplayBrandItems(brand) {
         </div>`  
         
         mainProduct.innerHTML = product;
-        addCart = document.querySelectorAll(".addCart")
-        console.log(addCart)
+        let addCart = document.querySelectorAll(".addCart")
+        AddItemToCart(addCart)
     
     }  
 }
 
 adidas.addEventListener("click", () => { 
-        
+       
         DisplayBrandItems("adidas")
 })
     
@@ -115,52 +118,61 @@ nike.addEventListener("click", () => {
         
     DisplayBrandItems("nike")
 })
+
+
     
 // display cart item when you click on the cart button
 function DisplayCart(){
     cart.addEventListener("click",()=>{
-        if(cartItem.style.display === "none"){
-            cartItem.style.display = "block",
+        if (cartItem.style.display === "") {
+            collection.style.display = "none",
                 homepage.style.display = "none";
-            collection.style.display="none"
-            
-        }else{
-            cartItem.style.display = "none"
-            homepage.style.display = "flex";
-            collection.style.display="grid"
+            cartItem.style.display = "grid";
+        } else {
+            collection.style.display = "grid",
+            homepage.style.display = "none";
+            cartItem.style.display = "";
         }
     })
 }
 DisplayCart()    
     
 
-function DisplayProducts(navbar,cart,home,collect) {
-    navbar.addEventListener("click", () => {
-        if (collect.style.display === "none") {
-            cart.style.display = "none",
-                home.style.display = "none";
-            collect.style.display = "grid"
-            
+function DisplayProducts() {
+    navBarCollection.addEventListener("click", () => {
+        if (collection.style.display === "") {
+            collection.style.display = "grid",
+                homepage.style.display = "none";
+            cartItem.style.display = "";
+            product = ''
+            Products()
         } else {
-            cart.style.display = "none",
-                home.style.display = "flex";
-            collect.style.display = "none"
+            collection.style.display = "",
+            homepage.style.display = "flex";
+            cartItem.style.display = "";
         }
-        
     })
 }
-DisplayProducts(navBarCollection,cartItem,homepage,collection)
+DisplayProducts()
+// display payment section
+function DisplayPayment(number,payment){
+    if (number >= 1) {
+        payment.style.display="block"
+    } else {
+        payment.style.display="none"
+    }
+}
 // adding functionality to the addCart button on the item
 
-function AddItemToCart(){{}
-    addCart.forEach(addCart =>{
+function AddItemToCart(placeholder){
+    placeholder.forEach(addCart =>{
         addCart.addEventListener("click", (e)=>{
             numberOfItemOnChart += 1
             numberofCart.innerHTML = numberOfItemOnChart;
-            numberOfitem.innerHTML=numberOfItemOnChart
+            numberOfitem.innerHTML = numberOfItemOnChart
+           DisplayPayment(numberOfItemOnChart,payMent)
            let Target=e.target;
             parent = Target.parentElement;
-            console.log(parent)
             let itemName = parent.querySelector("p").innerHTML;
             itemPrice=parent.querySelector("span").innerHTML
             itemImage=parent.querySelector("img").src
@@ -187,8 +199,28 @@ function AddItemToCart(){{}
             `
             itemContainer.innerHTML += itemdetails;
 
-            
             let itemQuantity = document.querySelectorAll(".itemsOnCart")
+            let allTotalPrice = document.querySelectorAll(".totalPrice")
+
+
+            function SumTotal() {
+                let total = 0;
+                for (let i = 0; i < allTotalPrice.length; i++){
+                    let subPrice = allTotalPrice[i].innerHTML;
+                    let subPrice2 = parseInt(subPrice.replace("$", ""))
+                    total += subPrice2
+                    
+                }
+                subTotalPrice.innerHTML = `$${total}`
+                
+                return total;
+            }
+            let toTal = SumTotal()
+            
+            let subtotal;
+
+
+            // computing total price of the product when the quantity increase or decrease
             function ItemTotalPrice() {
                 for (let i = 0; i < itemQuantity.length; i++){
                     let amount = itemQuantity[i].querySelectorAll(".quantity")
@@ -199,15 +231,18 @@ function AddItemToCart(){{}
                             let initial = parent.querySelector(".priceValue").innerHTML;
                             let initialPrice = parseInt(initial.replace("$", ""));
                             let totalValue = quantity * initialPrice;
-                            let totalPrice=parent.querySelector(".totalPrice").innerHTML=`$${totalValue}`
+                            let subtotal = toTal += initialPrice;
+                            let totalPrice = parent.querySelector(".totalPrice").innerHTML = `$${totalValue}`
+                            subTotalPrice.innerHTML = `$${subtotal}`
                         })
                     }
-                      console.log(amount)  
 
                 }
             }
             ItemTotalPrice()
 
+        //   removing items from the cart
+            
             function RemoveProduct() {
                 for (let i = 0; i < itemQuantity.length; i++){
                     let removeBotton = itemQuantity[i].querySelectorAll(".btn2");
@@ -215,10 +250,17 @@ function AddItemToCart(){{}
                         removeBotton[i].addEventListener("click", (e) => {
                             numberOfItemOnChart -= 1
                             numberofCart.innerHTML = numberOfItemOnChart;
-                            numberOfitem.innerHTML=numberOfItemOnChart
+                            numberOfitem.innerHTML = numberOfItemOnChart
+                            DisplayPayment(numberOfItemOnChart,payMent)
                             let parent = e.target.parentElement.parentElement;
                             parent.remove()
-                            console.log(numberOfItemOnChart)
+                            let removeTotalPrice = parent.querySelector(".totalPrice").innerHTML
+                            let removeTotalPrice2 = parseInt(removeTotalPrice.replace("$", ""))
+                            let currentSubTotal = subTotalPrice.innerHTML;
+                            let currentSubTotal2 = parseInt(currentSubTotal.replace("$", ""));
+                            let newTotal = currentSubTotal2 -= removeTotalPrice2 ;
+                            console.log(newTotal)
+                            subTotalPrice.innerHTML = `$${newTotal}`
                         })
                     }
                 }
@@ -227,7 +269,7 @@ function AddItemToCart(){{}
         })
        })
 }
-AddItemToCart()
+
 // let sneakersData = function(){
 //     fetch("https://newsapi.org/v2/everything?q=tesla&from=2023-04-24&sortBy=publishedAt&apiKey=623632dd405a4b0e984728cc40574cb7").then(function (respons) {
 //         return respons.json();
