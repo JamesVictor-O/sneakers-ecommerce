@@ -5,7 +5,7 @@ body{
     background-color: hsl(0, 0%, 100%);
 }
 .logo h2{
-    margin-top: 30px;
+    margin-top: 20px;
     color: rgb(245, 112, 63);
     font-size: 40px;
 }
@@ -20,7 +20,7 @@ body{
 .navMenu ul{
     display: flex;
     flex-direction: row;
-    margin-top: 30px;
+    margin-top: 10px;
     padding: 20px;
 }
 .navMenu ul{
@@ -29,7 +29,7 @@ body{
 }
 .navMenu ul li{
    text-decoration: none; 
-   margin-left: 20px;
+   margin-left: 15px;
    padding: 10px;
    color: rgb(83, 76, 76);
    border-bottom: 2px solid white;
@@ -45,7 +45,7 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 25px;
 }
 .profile{
     border: 2px solid black;
@@ -63,7 +63,6 @@ body{
 /* cart */
 
 .cart{
-    margin-top: px;
     margin-right: 20px;
     height: 40px;
     border-radius: 50%;
@@ -73,6 +72,9 @@ body{
 .cart img{
     width: 30px;
     /* border-radius: 50%; */
+}
+.humbugar{
+    display: none;
 }
 .noti{
     background-color: white;
@@ -117,7 +119,6 @@ body{
 .brand div{
     display: flex;
     margin-top: 40px;
-    justify-content: center;
     align-items: center;
 }
 .brand div input{
@@ -137,6 +138,10 @@ body{
     display: none;
     flex-direction: row;
     padding-top: 4%;
+}
+.priceSection{
+    display: flex;
+    flex-direction: column;
 }
 .Image{
     width: 40%;
@@ -229,10 +234,10 @@ body{
     padding: 3px;
     width: 80px;
 }
-.priceSection{
+/* .priceSection{
     display: flex;
     flex-direction: column;
-}
+} */
 .addItem button{
     border: none;
     background-color: rgb(210, 241, 241);
@@ -430,4 +435,89 @@ body{
 .payment div h3{
     display: flex;
     justify-content: cente;
+}
+/* styyes for mobile */
+@media(max-width: 767px){
+    body{
+        
+    }
+    .navMenu{
+        display: none;
+    }
+    .homePage{
+        display: flex;
+        flex-direction: column;
+    }
+    .brandImage img{
+        width: 300px;
+    }
+    .noti{
+        position: relative;
+        top: -50%;
+    }
+    .humbugar{
+        display: block;
+    }
+    .itemsOnCart{
+        margin-left: 0px;
+        width: 600px;
+        
+    }
+    .itemsOnCart img{
+        width: 50%;
+    }
+    .sub-dis{
+        display: flex;
+        justify-content: flex-start;
+        font-size: 12px;
+    }
+    .price{
+        margin-left: 40px;
+        width: 20%;
+        font-size: 11px;
+    }
+    .price div{
+        margin-left: 60px;
+    }
+    .cartitem{
+        padding-left: 20px;
+        padding-right: 20px;
+
+    }
+    .cart-items .discri{
+        margin-left: 20px;
+        width: 60%;
+        border-bottom: none;
+        height: 50px;
+
+    }
+    .itemsOnCart input{
+        margin-left: 0px;
+        width: 30px;
+    }
+    .itemsOnCart div{
+        padding-left: 0px;
+    }
+    .products{
+        display: grid;
+        grid-template-columns: 2fr 2fr;
+        padding-top: 20px;
+        padding-left: 20px;
+    }
+    .product{
+        width: 90px;
+    }
+    .header{
+        display: block;
+    }
+    .head{
+        margin-left: 160px; 
+    }
+    .header p{
+        margin-left: 170px; 
+    }
+    .btn2{
+        margin-left: 30px;
+    }
+
 }
