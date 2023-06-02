@@ -12,6 +12,8 @@ const adidas = document.querySelector(".adidas")
 const payMent = document.querySelector(".payment")
 const subTotalPrice=document.querySelector("#sub")
 
+let previousCartImage = [];
+
 let numberOfItemOnChart=0;
 let addCart;
 let parent;
@@ -20,68 +22,84 @@ const products=[
     {
         name:"nike shoe",
         picture:"assets/add1.jpeg",
-        price:"$200"
+        price: "$200",
+        id: "pro1",
+        otherPart:["assets/add1.jpeg","assets/add4.jpg","assets/Add7.jpg","assets/shoe1.png"]
     },
     {
         name:"adidas 3",
         picture:"assets/add2.png",
-        price:"$200"
+        price: "$200",
+        id:"pro2"
     },
     {
         name:"adidas 3",
         picture:"assets/add4.jpg",
-        price:"$200"
+        price: "$200",
+        id:"pro3"
     },
     {
         name:"adidas airforec 2",
         picture:"assets/Add7.jpg",
-        price:"$200"
+        price: "$200",
+        id:"pro4"
     },
     {
         name:"adidas sheo",
         picture:"assets/shoe1.png",
-        price:"$200"
+        price: "$200",
+        id:"pro5"
     },
     {
         name:"nike shoe",
         picture:"assets/shoe3.jpeg",
-        price:"$200"
+        price: "$200",
+        id:"pro6"
     },
     {
         name:"nike shoe",
         picture:"assets/shoe4.jpeg",
-        price:"$200"
+        price: "$200",
+        id:"pro7"
     },
     {
         name:"nike shoe",
         picture:"assets/shoe5.jpeg",
-        price:"$200"
+        price:"$200",
+        id:"pro8"
     },
     {
         name:"nike shoe",
         picture:"assets/shoe7.jpeg",
-        price:"$200"
+        price: "$200",
+        id:"pro9"
     },
     {
         name:"nike shoe",
         picture:"assets/shoe8.jpeg",
-        price:"$200"
+        price: "$200",
+        id:"pro10"
+        
     },
 ]
 let product="";
 
 function Products(){
     for(let i=0;i<products.length; i++){
-          product +=`<div class="pro-items">
-          <img src=${products[i].picture}>
-          <div class="about">
-              <p>${products[i].name}</p>
-              <span>${products[i].price}</span>
-           </div>
+          product +=`<div class="pro-items" id=${products[i].id}>
+          <div class='pro'>
+                <img src=${products[i].picture}>
+                <div class="about">
+                <p>${products[i].name}</p>
+                <span>${products[i].price}</span>
+            </div>
+          </div>
           <button class="addCart">Add to cart</button>
           </div>`
          mainProduct.innerHTML=product
         let addCart = document.querySelectorAll(".addCart")
+        let productItems = document.querySelectorAll(".pro")
+        Redirect(productItems)
         AddItemToCart(addCart)
       }
 }
@@ -166,19 +184,21 @@ function DisplayPayment(number,payment){
 
 function AddItemToCart(placeholder){
     placeholder.forEach(addCart =>{
-        addCart.addEventListener("click", (e)=>{
+        addCart.addEventListener("click", (e) => { 
             numberOfItemOnChart += 1
             numberofCart.innerHTML = numberOfItemOnChart;
-            numberOfitem.innerHTML = numberOfItemOnChart
+            numberOfitem.innerHTML = numberOfItemOnChart;
            DisplayPayment(numberOfItemOnChart,payMent)
            let Target=e.target;
             parent = Target.parentElement;
             let itemName = parent.querySelector("p").innerHTML;
             itemPrice=parent.querySelector("span").innerHTML
             itemImage=parent.querySelector("img").src
-          
+             
+           
                 
-            let itemdetails = `<div class="itemsOnCart">
+           
+            let itemdetails = `<div class="itemsOnCart" id=>
                 <div class="product">
                 <img src="${itemImage}" >
                 <h2>${itemName}</h2> 
@@ -198,7 +218,16 @@ function AddItemToCart(placeholder){
             </div>
             `
             itemContainer.innerHTML += itemdetails;
-
+                
+            // check if an item is already in the cart
+            //  if (previousCartImage.includes(itemImage)) {
+            //     null
+            // } else {
+            //      previousCartImage.push(itemImage)
+                 
+            // }
+            
+           
             let itemQuantity = document.querySelectorAll(".itemsOnCart")
             let allTotalPrice = document.querySelectorAll(".totalPrice")
 
@@ -208,11 +237,9 @@ function AddItemToCart(placeholder){
                 for (let i = 0; i < allTotalPrice.length; i++){
                     let subPrice = allTotalPrice[i].innerHTML;
                     let subPrice2 = parseInt(subPrice.replace("$", ""))
-                    total += subPrice2
-                    
+                    total += subPrice2                   
                 }
                 subTotalPrice.innerHTML = `$${total}`
-                
                 return total;
             }
             let toTal = SumTotal()
@@ -227,7 +254,6 @@ function AddItemToCart(placeholder){
                     for (let i = 0; i < amount.length; i++) {
                         amount[i].addEventListener("change", (e) => {
                             let totalPriceOfItems = 0;
-
                             let parent = e.target.parentNode.parentNode;
                             let quantity = e.target.value;
                             let initial = parent.querySelector(".priceValue").innerHTML;
@@ -260,16 +286,27 @@ function AddItemToCart(placeholder){
                         removeBotton[i].addEventListener("click", (e) => {
                             numberOfItemOnChart -= 1
                             numberofCart.innerHTML = numberOfItemOnChart;
-                            numberOfitem.innerHTML = numberOfItemOnChart
+                            numberOfitem.innerHTML = numberOfItemOnChart;
                             DisplayPayment(numberOfItemOnChart,payMent)
                             let parent = e.target.parentElement.parentElement;
                             parent.remove()
                             let removeTotalPrice = parent.querySelector(".totalPrice").innerHTML
                             let removeTotalPrice2 = parseInt(removeTotalPrice.replace("$", ""))
                             let currentSubTotal = subTotalPrice.innerHTML;
+                            console.log(previousCartImage)
+
+                            // to remove image from the previous array;
+
+                            // let imageIndex = previousCartImage.indexOf(itemImage)
+                            // if (imageIndex !== -1) {
+                            //     previousCartImage.splice(imageIndex, 1)
+                            //     console.log(previousCartImage.length)
+                            //     console.log(previousCartImage)
+                                
+                            // }
+                            
                             let currentSubTotal2 = parseInt(currentSubTotal.replace("$", ""));
                             let newTotal = currentSubTotal2 -= removeTotalPrice2 ;
-                            console.log(newTotal)
                             subTotalPrice.innerHTML = `$${newTotal}`
                         })
                     }
@@ -280,11 +317,72 @@ function AddItemToCart(placeholder){
        })
 }
 
-// let sneakersData = function(){
-//     fetch("https://newsapi.org/v2/everything?q=tesla&from=2023-04-24&sortBy=publishedAt&apiKey=623632dd405a4b0e984728cc40574cb7").then(function (respons) {
-//         return respons.json();
-//     }).then(function (data) {
-//         console.log(data)
-//     });
-// }
-// sneakersData()
+//should redirect to the details page when you on the product image
+let pict = ""
+let currentImag = 0
+let otherParts;
+let mainPart;
+function Redirect(placeholder) {
+     
+    placeholder.forEach(proDucts => {
+       
+        proDucts.addEventListener("click", (e) => {
+            const mainBody=document.querySelector(".bodyMain")
+            homepage.style.display = "none"
+            collection.style.display = "none"
+            mainBody.style.display = "flex"
+            
+            let Target = e.target;
+            let product = Target.parentElement.parentElement.id;
+            
+            for (let i = 0; i < products.length; i++){
+                if (products[i].id === product) {
+                    otherParts = products[i].otherPart
+                    mainPart=products[i].picture
+                }
+            }
+            for (let i = 0; i < 4; i++){
+               pict += ` <div>
+                        <img src=${otherParts[i]}>
+                     </div>`
+                document.querySelector(".others").innerHTML=pict
+            }
+            let displayImage = document.querySelector(".displayed");
+            displayImage.innerHTML=`<img src=${otherParts[currentImag]}>`
+            console.log(mainPart)
+
+            
+        })   
+    })
+    // 
+}
+function NextBackBtn() {
+    function Next() {
+        let nextBtn = document.querySelector(".next")
+      console.log(nextBtn)
+        nextBtn.addEventListener("click", () => {
+            currentImag += 1;
+            if (currentImag === 4) {
+                currentImag=0
+            }
+            let displayImage = document.querySelector(".displayed");
+            displayImage.innerHTML=`<img src=${otherParts[currentImag]}>`
+        })
+    }
+    function Back() {
+        let backBtn = document.querySelector(".previous")
+        backBtn.addEventListener("click", () => {
+            currentImag -= 1;
+            if (currentImag === 0) {
+                currentImag=4
+            }
+            let displayImage = document.querySelector(".displayed");
+            displayImage.innerHTML=`<img src=${otherParts[currentImag]}>`
+            console.log(currentImag)
+        })
+    }
+    Back()
+    Next()
+}
+NextBackBtn()
+Redirect()

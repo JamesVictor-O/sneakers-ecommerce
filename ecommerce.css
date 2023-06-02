@@ -78,12 +78,14 @@ body{
     background-color: white;
     padding-right: 10px;
     padding: 6px;
-    border: 0.7px solid black;
+    color: wheat;
+    border: 0.7px solid white;
     text-align: center;
     border-radius: 50%;
     align-items: center;
     position: absolute;
     width: 12px;
+    background-color: rgb(252, 123, 76);
     top: 2%;
     left: 91%;
 }
@@ -135,7 +137,6 @@ body{
     display: none;
     flex-direction: row;
     padding-top: 4%;
-    visibility: hidden;
 }
 .Image{
     width: 40%;
@@ -228,6 +229,10 @@ body{
     padding: 3px;
     width: 80px;
 }
+.priceSection{
+    display: flex;
+    flex-direction: column;
+}
 .addItem button{
     border: none;
     background-color: rgb(210, 241, 241);
@@ -243,6 +248,7 @@ body{
 .details{
     width: 60%;
     margin-right: 70px;
+    margin-left: 40px;
 }
 
 .Cartbutton button img{
@@ -267,7 +273,7 @@ body{
 }
 .products{
     display: grid;
-    grid-template-columns: 2fr 2fr 2fr 2fr;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
     padding-top: 20px;
     padding-left: 20px;
 }
@@ -284,25 +290,23 @@ body{
 }
 .pro-items .about{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
 
 }
 .pro-items .about span{
     border: 1px solid black;
-    padding: 6px;
+    padding: 4px;
     border-radius: 6px;
-    margin-left: 6px;
 }
 .product{
     display: flex;
     flex-direction: column;
     align-content: center;
     height: 100%;
-    padding: 10px;
+    padding: px;
     width: 150px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -314,7 +318,9 @@ body{
     border-radius: 10px;
 }
 .product h2{
-    font-size: 17px;
+    font-size: 14px;
+    display: flex;
+    
 }
 .pro-items img{
     width: 200px;
@@ -335,14 +341,15 @@ body{
 }
 /* items on cart */
 .itemsOnCart img{
-    width: 90px;
+    width: 80%;
 }
 .itemsOnCart input{
     width: 40px;
     margin-left: 40px;
     margin-right: 10px;
     outline: none;
-    border-radius: 20px;
+    border: 0.7px solid black;
+    border-radius: 5px;
     padding: 5px;
 }
 .itemsOnCart{
@@ -362,20 +369,17 @@ body{
 .price{
     display: flex;
     flex-direction: row;
-    margin-left: 110px;
+    margin-left: 140px;
     width: 50%;
+    font-size: 13px;
 }
 .price div{
-    margin-left: 90px;
+    margin-left: 150px;
 }
 .itemsOnCart div{
     padding-left: 30px;
 }
-.itemsOnCart .product{
-    background-color: rgb(64, 181, 248);
-    height: 100px;
-    border-radius: 4px;
-}
+
 .header{
     display: flex;
     justify-content: center;
