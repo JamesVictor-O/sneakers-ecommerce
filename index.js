@@ -414,4 +414,5 @@ function NextBackBtn() {
     Next()
 }
 NextBackBtn()
-Redirect()
+
+// setTimeout(Later  , 200) 
