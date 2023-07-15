@@ -88,8 +88,7 @@ body{
     position: absolute;
     width: 12px;
     background-color: rgb(252, 123, 76);
-    top: 2%;
-    left: 91%;
+    top: 1%;
 }
 
 /* Home page */
@@ -440,10 +439,12 @@ body{
     display: flex;
     justify-content: cente;
 }
-.humNotification{
+.navBar{
     display: none;
 }
-/* styyes for mobile */
+
+
+/* styling for mobile */
 @media(max-width: 360px){
     body{
         width: 100%;
@@ -475,6 +476,7 @@ body{
     .noti{
         position: relative;
         top: -50%;
+        left: 70%;
     }
     .logo h2{
         margin-top: 5px;
@@ -595,7 +597,7 @@ body{
         padding-right: 10px;
     }
     .payment{
-        position: relative;
+       position: relative;
        left: 30%;
     }
     .products{
@@ -621,15 +623,36 @@ body{
         margin-left: 30px;
     }
     /* moblile nav menu */
-    .mobile-nav{
+    .navBar{
         position: fixed;
         width: 100%;
         display: block;
         height: 100vh;
-        top: 9%;
+        top: 7%;
+        right: 2%;
+        left: 100%;
         z-index: 90;
-        background: red;
+        background: white;
+        transition: .3s ease;
     }
-    
+   .navBar.isActive{
+        left: 0%;
+    }
+    .mobile-nav{
+        margin-top: 40px;
+    }
+    .mobile-nav a{
+        display: block;
+        text-align: center;
+        margin: 0 auto 16px;
+        font-size: 1.2rem;
+        background: rgb(84, 187, 247);
+        width: 100%;
+        max-width: 130px;
+        padding: .5rem;
+        text-decoration: none;
+        color: white;
+        border-radius: 50px;
+    }
 
 }

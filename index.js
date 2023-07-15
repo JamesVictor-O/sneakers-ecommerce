@@ -9,7 +9,7 @@ const numberOfitem = document.querySelector(".no")
 const navBarCollection = document.querySelector(".btnCollection");
 const nike = document.querySelector(".nike")
 const mainBody=document.querySelector(".bodyMain")
-const adidas = document.querySelector(".adidas")
+const adidas = document.querySelector(".adidasEl")
 const payMent = document.querySelector(".payment")
 const subTotalPrice=document.querySelector("#sub")
 
@@ -59,13 +59,13 @@ const products=[
         id:"pro6"
     },
     {
-        name:"nike shoe",
+        name:"nike shoe1",
         picture:"assets/shoe4.jpeg",
         price: "$200",
         id:"pro7"
     },
     {
-        name:"nike shoe",
+        name:"nike shoe2",
         picture:"assets/shoe5.jpeg",
         price:"$200",
         id:"pro8"
@@ -105,30 +105,29 @@ function Products(){
         AddItemToCart(addCart)
       }
 }
+
+
 // display products base on brand
 function DisplayBrandItems(brand) {
-    if (collection.style.display === "") {
-        collection.style.display = "grid",
-            homepage.style.display = "none";
-        cartItem.style.display = "";
-        product = ''
-        Products()
-    } else {
-        collection.style.display = "",
-        homepage.style.display = "";
-        cartItem.style.display = "";
-    }
+    homepage.style.display = "none";
+    cartItem.style.display = "";
+    collection.style.display = "grid",
+    product = ''
+    Products()
+    
     let filteredItem = products.filter(items => {
         return items.name.includes(brand)
     })
+
+    console.log(filteredItem)
     product=""
     for(let i=0;i<filteredItem.length; i++){
-        product +=`<div class="pro-items" id=${products[i].id}>
+        product +=`<div class="pro-items" id=${filteredItem[i].id}>
           <div class='pro'>
-                <img src=${products[i].picture}>
+                <img src=${filteredItem[i].picture}>
                 <div class="about">
-                <p>${products[i].name}</p>
-                <span>${products[i].price}</span>
+                <p>${filteredItem[i].name}</p>
+                <span>${filteredItem[i].price}</span>
             </div>
           </div>
           <button class="addCart">Add to cart</button>
@@ -145,7 +144,7 @@ function DisplayBrandItems(brand) {
 
 adidas.addEventListener("click", () => { 
        
-        DisplayBrandItems("adidas")
+    DisplayBrandItems("adidas")
 })
     
 nike.addEventListener("click", () => { 
@@ -153,8 +152,10 @@ nike.addEventListener("click", () => {
     DisplayBrandItems("nike")
 })
 
-
+console.log(adidas)
+console.log(nike)
     
+
 // display cart item when you click on the cart button
 function DisplayCart(){
     cart.addEventListener("click",()=>{
@@ -172,24 +173,20 @@ function DisplayCart(){
 DisplayCart()    
     
 
+// displaying the whole collection items
 function DisplayProducts() {
     navBarCollection.addEventListener("click", () => {
-        if (collection.style.display === "") {
             collection.style.display = "grid",
-                homepage.style.display = "none";
+            homepage.style.display = "none";
             cartItem.style.display = "";
             mainBody.style.display="none"
             product = ''
             Products()
-        } else {
-            collection.style.display = "",
-            homepage.style.display = "flex";
-            cartItem.style.display = "";
-            mainBody.style.display="none"
-        }
     })
 }
 DisplayProducts()
+
+
 // display payment section
 function DisplayPayment(number,payment){
     if (number >= 1) {
@@ -198,6 +195,8 @@ function DisplayPayment(number,payment){
         payment.style.display="none"
     }
 }
+
+
 // adding functionality to the addCart button on the item
 
 function AddItemToCart(placeholder){
@@ -415,4 +414,65 @@ function NextBackBtn() {
 }
 NextBackBtn()
 
+// mobile navigation
+
+function MobileNavBar() {
+    const humbugerEl = document.querySelector(".humbugar")
+    const navMenusEl = document.querySelector(".navBar");
+
+    // const collectionEl=document.querySelector(".moCollBtn")
+    // const nikeEl=document.querySelector(".moNikBtn")
+    // const adidasEl=document.querySelector(".moAdidBtn")
+    // const aboutEl=document.querySelector(".moAboBtn")
+    // const contactEl=document.querySelector(".moConBtn")
+     function OpenCloseNavbar(){
+        humbugerEl.classList.toggle("is-active")
+        if (humbugerEl.classList.contains("is-active")) {
+            navMenusEl.classList.add("isActive")
+        } else {
+            navMenusEl.classList.remove("isActive")
+        }
+     }
+          
+    humbugerEl.addEventListener("click", () => {
+        OpenCloseNavbar()
+    })
+
+    function Navigation() {
+        const allNavBars=document.querySelectorAll(".navBtn")
+        const arrayOfNav = Array.from(allNavBars)
+        
+        arrayOfNav.map(eachNavBar => {
+            eachNavBar.addEventListener("click", (e) => {
+                const elementClass = e.target.getAttribute('id')
+
+                if (elementClass == "nike" || "adidas") {
+                    const brandProductsEl = document.querySelector("#" + elementClass)
+                    brandProductsEl.addEventListener("click", () => {
+                        DisplayBrandItems(elementClass)
+                        OpenCloseNavbar()
+                    })  
+                }
+                if (elementClass == "btnCollection") {
+                    const collectionEl = document.querySelector("#" + elementClass);
+                    collectionEl.addEventListener("click", () => {
+                        OpenCloseNavbar()
+                        collection.style.display = "grid",
+                        homepage.style.display = "none";
+                        cartItem.style.display = "";
+                        mainBody.style.display="none"
+                        product = ''
+                        Products()
+                        // DisplayPr oducts()
+                    })
+                }
+           })
+       })
+    }
+
+    Navigation()
+    
+
+}
+MobileNavBar()
 // setTimeout(Later  , 200) 
